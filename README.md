@@ -343,9 +343,10 @@ WHERE revenue < 0
 
 UNION ALL
 
+-- Используем стандартную конкатенацию '||' вместо FORMAT с символами '%'
 SELECT 
     'Чистая прибыль превышает выручку' AS violation_type,
-    ticker, report_date, FORMAT('NP: %s, REV: %s', net_profit, revenue) AS details
+    ticker, report_date, 'NP: ' || COALESCE(net_profit::text, 'null') || ', REV: ' || COALESCE(revenue::text, 'null') AS details
 FROM public.view_corporate_financial_mart
 WHERE net_profit > revenue AND revenue IS NOT NULL
 
@@ -360,7 +361,8 @@ WHERE c.company_sk IS NULL
 GROUP BY report_date;
 """
 
-df_dq_issues = pd.read_sql(dq_query, engine)
+# Оборачиваем запрос в text() для полной совместимости с SQLAlchemy 2.0
+df_dq_issues = pd.read_sql(text(dq_query), engine)
 
 if df_dq_issues.empty:
     print("==================================================")
