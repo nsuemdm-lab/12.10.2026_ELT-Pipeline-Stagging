@@ -179,7 +179,7 @@ with engine.connect() as conn:
 
 ### [CODE ЯЧЕЙКА 4] SQL-пайплайн трансформации и наполнения витрин
 ```python
-elt_transform_sql = """
+elt_transform_sql = r"""
 BEGIN;
 
 -- 1. СИНХРОНИЗАЦИЯ ИЗМЕРЕНИЯ dim_company
@@ -233,7 +233,7 @@ SELECT
     rf.metric_id, 
     rf.metric_value
 FROM resolved_facts rf
-WHERE NOT EXISTS (
+WHERE NOT EXISTS ( 
     SELECT 1 
     FROM public.fact_financial_metrics f
     WHERE f.report_date = rf.report_date 
