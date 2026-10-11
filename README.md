@@ -28,6 +28,7 @@
 ```python
 import subprocess
 import os
+
 import pandas as pd
 from sqlalchemy import create_engine, text
 
@@ -41,7 +42,8 @@ else:
     print("[OK] Демон PostgreSQL активен.")
 
 # 2. Инициализация пула соединений к локальной БД
-DB_URI = 'postgresql://dwh_admin:admin123@localhost:5432/elt_dwh'
+# Явно указываем psycopg2 драйвер, чтобы избежать ModuleNotFoundError
+DB_URI = 'postgresql+psycopg2://dwh_admin:admin123@localhost:5432/elt_dwh'
 engine = create_engine(DB_URI, pool_pre_ping=True)
 
 # 3. Тест коннекта
