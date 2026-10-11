@@ -398,17 +398,18 @@ print(f"[OK] Эталонный файл резервной копии обно�
 ### [MARKDOWN ЯЧЕЙКА 8]
 
 ---
+---
 ### САМОСТОЯТЕЛЬНАЯ РАБОТА СТУДЕНТА (ЗАДАЧИ НА ДОРАБОТКУ)
 
 1. **Расширение набора метрик:**
    Добавьте в процедуру инжекции метрику `CAPEX` (Capital Expenditures) для тикеров `GAZP` и `LKOH`. Модифицируйте витрину `public.view_corporate_financial_mart`, добавив колонку `capex` и расчет свободного денежного потока по формуле:
-   
-   $$\text{Calculated\_FCF} = \text{EBITDA} - \text{CAPEX}$$
+
+   $$\text{FCF}_{\text{calc}} = \text{EBITDA} - \text{CAPEX}$$
 
 2. **Проверка идемпотентности:**
    Выполните повторный запуск **[CODE ЯЧЕЙКИ 3]** и **[CODE ЯЧЕЙКИ 4]**. Убедитесь, что количество записей в таблице `public.fact_financial_metrics` осталось неизменным (отсутствуют дубликаты записей на одинаковые отчетные даты).
 
 3. **Аудит производительности:**
    Выполните в ячейке SQL-команду:
-   ```sql
-   EXPLAIN ANALYZE SELECT * FROM public.view_corporate_financial_mart;
+   `EXPLAIN ANALYZE SELECT * FROM public.view_corporate_financial_mart;`
+   Убедитесь, что для соединения таблиц задействован индекс `idx_fact_fin_metrics`.
